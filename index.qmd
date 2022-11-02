@@ -1,0 +1,879 @@
+---
+format: 
+  revealjs:
+    chalkboard: true
+    lang: fr
+    theme: ["theme/q-theme.scss"]
+    slide-number: c/t
+    logo: "img/hex-tidyverse.png"
+    footer: "[https://oousmane.github.io/]([https://oousmane.github.io/)"
+    code-copy: true
+    center-title-slide: false
+    include-in-header: heading-meta.html
+    code-link: true
+    code-overflow: wrap
+    highlight-style: a11y
+    height: 1080
+    width: 1920
+execute: 
+  eval: false
+  echo: true
+---
+
+<h1>Techniques d'analyse de données</h1>
+
+<h2>Une introduction rapide à R et au Tidyverse</h2>
+
+<hr>
+
+<h3>Ousmane Ouedraogo, BSc <br>Météorologiste<br>2022-11-01</h3>
+
+![](img/tidyverse2.png){fig-align="right"}
+
+## Objectifs pédagogiques
+
+<br>
+
+Ce module est une introduction \[**très rapide**\]{style="color:#cc0000"}à R et au Tidyverse conçu pour répondre aux objectifs suivants:
+
+-   comprendre ce qu'est R et le tidyverse;
+
+-   créer et gérer un projet d'analyse de données;
+
+-   importer des données Excel & textes plats;
+
+-   manipuler, traiter un ensemble de données
+
+-   générer des résumés statistiques sur un ensemble de données
+
+-   visualisation statistique importantes.
+
+-   export des analyses en tableaux, graphiques etc...
+
+## Bibliographies
+
+> Ce module n'est qu'une introduction rapide, la plupart de ce contenu est tiré de ses livres que voici.
+> Ils sont disponibles en ligne gratuitement.
+> Grand merci à ces auteurs.
+> Mon coup de coeur c'est R for Data Science que je considère comme la bible
+
+::: columns
+::: {.column width="50%"}
+-   [R for Data Science](https://r4ds.had.co.nz "R for Data Science")
+
+-   [Hands-On Programming with R](https://rstudio-education.github.io/hopr/ "Hands-On Programming with R")
+
+-   [R Graphics Cookbook](https://r-graphics.org "R Graphics Cookbook")
+
+Pour vous motiver davantage tous ces livre ont été écrit et publier en ligne avec R
+:::
+
+::: {.column width="50%"}
+![](img/Presentation1/Slide2.png)
+:::
+:::
+
+## C'est quoi R et Tidyverse ?
+
+::: columns
+<br>
+
+::: {.column width="50%"}
+**R** est à la fois un logiciel et langage de programmation.
+Conçu à la base pour les Stats, de nos jours R est utilisé en :
+
+-   SIG: acquisitions, traitement, analyse spatiales ( **sf**, **terra**, **stars ...**)
+
+-   Développement web : Application web, API, Blog et Site web
+
+-   Traitement de texte : Documents technique et scientifique : livres, rapports, articles, posters
+
+R est forte de sa communauté qui la plupart du temps sont des chercheurs, étudiants.
+L'aide est disponible partout sur des blog, twitter suivre le hastag #rstats.
+:::
+
+::: {.column width="50%"}
+**Tidyverse** est une boîte à outils conçu pour faciliter, accelerer la partie traitement et analyse de données et se concentré sur les interprétations.
+
+-   de l'importation des données
+
+-   du recodage, nettoyage, traitement et inspection
+
+-   de l'analyse et la visualisation, production de rapports
+
+-   Partage des résultats d'analyses sous forme de page web (HTML), de pdf ou de site web
+
+Le Tidyverse pour moi c'est aujourd'hui une philosophie, une façon moderne et efficiente de travailler avec les données
+:::
+:::
+
+## Astuces avant de commencer
+
+<br>
+
+La programmation est très exigeante et requiert un certain nombre de règles simple mais qui allègent énormément le workflow.
+
+-   Des noms de dossiers sans espaces, sans caractères spéciaux
+
+-   Les noms doivent être courts, évocateurs et ne comporter ni caractères spéciaux, espaces
+
+-   Les chemins doivent être le plus cours possibles.
+
+-   Les données d'entrées préférentiellement en textes, et bien structurées: une colonne une variable, une ligne une observation.
+    (Tidy data principles)
+
+Le plus important en programmation c'est de savoir :
+
+-   plusieurs façon existent, et une plus simple est recherchée
+
+-   être créatifs, curieux et aimer les défis
+
+-   un langage de programmation est un outil (avoir les outils du menuisier ne fait de vous un )
+
+## Packages à installer
+
+<br>
+
+Les packages sont des collections de fonctions, de données développer et distribuer sur le CRAN ou sur un GIT.
+L'installation d'un package est relativement simple : Outils de gestion de packages ou via la commande `install.packages().`
+
+**Installation des packages**
+
+<br>
+
+```{r}
+install.packages(
+  c("tidyverse","report","dlookr","devtools",
+    "ggpubr","palmerpenguins","broom",
+    "performance","see")
+  )
+
+devtools::install_github("olihawkins/pilot")
+
+```
+
+Le chargement est fait au moyen de la commande `library()`
+
+## Création de projet R
+
+<br>
+
+Un projet R est un environnement de travail propre et portable.
+
+-   Facilite la gestion de données et répertoire de travail
+
+-   Organise et fluidifie le processus d'analyse de données
+
+-   Indépendant de l'ordinateur et du système d'exploitation
+
+Création : **File \> New Project \>.... (Démonstration)**
+
+<br>
+
+```{r}
+library(fs)
+dir_create("data")
+dir_create("scripts")
+dir_create("figs")
+dir_create("output")
+file_create("data/00-configuration.R")
+```
+
+Les fichiers et répertoires peuvent être créer manuellement aussi.
+
+Je vous ai fourni dejà un répertoire projet : `quick-intro-r`.
+Ouvrez le dans RStudio
+
+**File \> Open project \>...(Démonstration)**
+
+## Premiers pas avec R
+
+::: columns
+::: {.column width="50%"}
+#### Une calculatrice
+
+R est un langage interactif.
+La console de R est un peu comme une calculatrice.
+
+```{r}
+1 + 1
+2*5 + 1
+```
+
+#### Résultats en mémoire
+
+**assignation**
+
+```{r}
+a <- 1 + 1
+```
+
+**accès**
+
+```{r}
+print(a)
+#ou 
+a # puis entrer à la console
+```
+:::
+
+::: {.column width="50%"}
+![](img/Screenshot%202022-10-21%20at%2016.38.36.png)
+:::
+:::
+
+## Les objets R
+
+::: columns
+::: {.column width="50%"}
+#### Vecteurs
+
+Données à une dimension, exemple les dates ou notes de physiques.
+données de même nature
+
+```{r}
+x <- seq(1,10,2)
+y <- 1:10
+z <- c(1,7,11,19,20)
+t <- c("Anna","Marie","Pain","Chat")
+```
+
+#### Dataframe
+
+Tableau, colonne de même nature.
+Plus souvent les données de la vie réelle.
+
+```{r}
+df <- data.frame(x=x,y=y)
+df <- data.frame(
+  x=seq(1,5,1),
+  y=c("A","B","C","D","E"), 
+  z= c("Anna","Marie","Pain","Chat","Lion")
+  )
+df <- vroom(file="chemin-fichier ou url")
+```
+:::
+
+::: {.column width="50%"}
+#### Matrices
+
+Tableau de données de même nature.
+
+```{r}
+x <- 1:9
+mat <- matrix(x,nrow = 3,byrow = TRUE)
+
+```
+
+<br>
+
+#### Liste
+
+Une liste contient plusieurs types d'objets de nature differentes
+
+```{r}
+lst_data <- list(
+  mat = matrix(1:9,nrow = 3,byrow = TRUE),
+  df = data.frame(
+    x=seq(1,5,1),
+    y=c("A","B","C","D","E")
+    ),
+  vector = seq(1,100,10)
+)
+```
+:::
+:::
+
+## Importation de données
+
+<br>
+
+L'un des pans importants en analyse de données, c'est comment passer du fichier au logiciel.
+Cette procédure est appeler Importation de données, ou Input en anglais.
+Plusieurs **package**, existent pour ça mais je montre deux points:
+
+::: columns
+::: {.column width="50%"}
+:::
+
+::: {.column width="50%"}
+Un véritable **couteau suisse** pour importer les fichiers textes, est le **package vroom.** Une seule commande :
+
+```{r}
+library(vroom)
+vroom(file = "chemin-du-fichier",
+      col_names = "TRUE ou FALSE")
+```
+
+Cette commande devine les délimiteurs, les formats et tout.
+Plus besoin de se casser la tête.
+
+Cette commande peut lire un fichier distant ( depuis un serveur directement dans R)
+
+```{r}
+library(vroom)
+vroom(file = "lien-internet-vers-fichier",
+      col_names = "TRUE ou FALSE")
+```
+:::
+:::
+
+## Pratique importation
+
+##### Fichier distant
+
+<br>
+
+```{r}
+weather_data <- vroom(
+  file = "https://raw.githubusercontent.com/vega/vega/main/docs/data/seattle-weather.csv",
+  col_names = TRUE
+  )
+```
+
+##### Fichier local
+
+<br>
+
+::: columns
+::: {.column width="50%"}
+```{r}
+weather_data <- vroom(
+  file="data/seattle-weather.csv",
+  col_names = TRUE
+)
+```
+:::
+
+::: {.column width="50%"}
+![](images/Screenshot%202022-10-21%20at%2017.17.23.png)
+:::
+:::
+
+## Le Tidyverse
+
+<br>
+
+**Le core du tidyverse**
+
+-   `ggplot2`, pour les graphiques
+-   `dplyr`, pour transformer et résumer le contenu des données
+-   `tidyr`, pour transformer la structure des données de type tableau purrr, une mise à niveau des outils de programmation fonctionnelle de R base
+-   `tibble`, un tableau de données amélioré
+
+**La philosophie du tidyverse**
+
+> D'après Hadley Wickham (directeur scientifique de RStudio) permettre à l'analyste de se concentrer sur les questions de fond plutôt que sur les aspects techniques de l'analyse des données.
+
+## Le pipe %\>%
+
+<br> **Objectif**
+
+Le but du pipe est de vous aider à écrire le code d'une manière plus facile à lire et à comprendre.
+
+**Principe**
+
+-   $x$ %\>% $f()$ est équivalent à $f(x)$
+-   $x$ %\>% $f(y)$ est équivalent à $f(x, y)$
+-   $x$ %\>% $f(y,.)$ est équivalent à $f(y,x)$
+
+```{r}
+x<-3
+x <- sqrt(x)
+x <- log(x)
+
+```
+
+Grâce au **pipe** des opérations complexes pourront s'enchainées sans création de variables intermédiaires seul le resultat final compte !
+Génial n'est-ce pas?
+
+```{r}
+x %>% 
+  sqrt() %>% 
+  log()
+```
+
+## Manipulation de données - dplyr
+
+### dplyr c'est quoi?
+
+> `dplyr` est un package du tidyverse.
+> Il abrite de nombreuses fonctions qui facilitent la manipulation des données.
+
+> dplyr est donc une grammaire de la manipulation des données, fournissant un ensemble cohérent de verbes qui vous aident à résoudre les défis de manipulation de données les plus courants.
+
+-   `filter()`: conserve les lignes qui satisfont vos conditions
+-   `select()`: conserver ou exclure certaines colonnes
+-   `rename()`: renommer les colonnes
+-   `relocate()`: déplacer les colonnes
+-   `mutate()`: ajouter une nouvelle colonne
+
+## Manipulation de données - dplyr
+
+### dplyr c'est quoi
+
+<br>
+
+> dplyr est donc une grammaire de la manipulation des données, fournissant un ensemble cohérent de verbes qui vous aident à résoudre les défis de manipulation de données les plus courants.
+
+-   `group_by()` + `summarise()`: obtenir des statistiques récapitulatives par groupe
+-   `across()`: applique une fonction sur plusieurs colonnes
+-   `count()`: trouver rapidement les décomptes pour différents groupes
+-   `case_when()`: ifelse vectorisé
+
+**Note:** Bien d'autres verbes sont disponibles mais les plus importants sont ceux là, nous allons les revisités individuellement.
+
+## Selection lignes - filter()
+
+> La fonction filter() est utilisée pour filtrer un tableau de données, en retenant toutes les lignes qui satisfont à vos conditions.
+
+::: columns
+::: {.column width="50%"}
+**entrées** : données et expréssion(s) de filtrage
+
+**sortie** : génère un tibble sans modifier les données
+
+```{r}
+mtcars %>% 
+  filter(cyl == 4, mpg>20) %>%
+head(6)
+```
+
+Des opérateurs utiles
+
+-   [`==`](https://rdrr.io/r/base/Comparison.html), `>`, `>=` etc
+
+-   `&`, [`|`](https://rdrr.io/r/base/Logic.html), [`!`](https://rdrr.io/r/base/Logic.html), [`xor()`](https://rdrr.io/r/base/Logic.html)
+
+-   [`is.na()`](https://rdrr.io/r/base/NA.html)
+
+-   [`between()`](https://dplyr.tidyverse.org/reference/between.html), [`near()`](https://dplyr.tidyverse.org/reference/near.html)
+:::
+
+::: {.column width="50%"}
+![](img/filter.jpeg)
+:::
+:::
+
+**Pratique** : Charger les données gapminder et filtrer les données d'une année et ou d'un groupe de pays.
+
+## Sélection de colonnes
+
+> La fonction `select()` est utilisée pour séléction un certains nombres de variable , en retenant toutes les lignes qui satisfont à vos conditions.
+
+::: columns
+::: {.column width="50%"}
+**entrées** : données et expréssion(s) de selection
+
+**sortie** : génère un tibble sans modifier les données
+
+```{r}
+mtcars %>% 
+  select(cyl, mpg) %>%
+head(6)
+```
+
+Des méthodes utiles
+
+-   `select(df, 1:5)`
+
+-   `select(df , -1)` ou `select(df, -colname)`
+
+-   `select_if(df, is.numeric)`
+
+-   `starts_with()`,`ends_with()`
+
+-   `is.numeric()`, `is.character()`
+:::
+
+::: {.column width="50%"}
+![](img/Presentation1/Slide1.png)
+:::
+:::
+
+**Pratique** : Charger les données gapminder et filtrer les données d'une année et ou d'un groupe de pays.
+
+## Ajout colonne - mutate()
+
+> `mutate()` permet d'ajouter une variable à un tableau de données à partir de données intra ou extra de celui-ci tout en conservant les autres variables.
+> Le mot `mutate` prend donc tous sons sens.
+
+::: columns
+::: {.column width="50%"}
+Ajouter une nouvelle colonne à `penguins` avec la masse corporelle en g convertie en kg.
+
+```{r}
+library(palmerpenguins)
+penguins %>%
+  mutate(body_mass_kg = body_mass_g / 1000) %>% 
+  select(species, body_mass_g, body_mass_kg) %>% 
+  head(4)
+```
+
+Ajouter une nouvelle colonne à `penguins`.
+
+```{r}
+library(palmerpenguins)
+penguins %>%
+  mutate(
+    sd_mass_kg = sd(body_mass_kg,na.rm = TRUE),
+    .before = species
+    ) 
+```
+
+Les arguments `.before` et `.after` permet de situer la nouvelle colonne ainsi créee.
+:::
+
+::: {.column width="50%"}
+![](img/mutate.jpeg)
+:::
+:::
+
+## Renommer des colonnes
+
+> la fonction `rename()` permet de changer le nom d'une ou plusieurs colonnes.
+> Cela peut s'avérer utile particulièrement utile dans certains cas.
+
+::: columns
+::: {.column width="50%"}
+La syntaxe est toute simple :
+
+```{r}
+penguins %>%
+  rename(nouveau_nom = ancien_nom) %>% 
+  head(6)
+```
+
+Renommer la colonne `island` en `palmer_island`
+
+```{r}
+penguins %>%
+  rename(palmer_island = island) %>% 
+  head(6)
+  
+```
+:::
+
+::: {.column width="50%"}
+![](img/rename_sm.jpeg)
+:::
+:::
+
+## Relocaliser des colonnes
+
+> Utilisez `relocate()` pour changer la position des colonnes, en utilisant la même syntaxe que `select()` pour faciliter le déplacement de blocs de colonnes en une seule fois.
+
+::: columns
+::: {.column width="50%"}
+```{r}
+df <- tibble(
+  a = 1, b = 1, c = 1, d = "a", e = "a", f = "a")
+df %>% relocate(f)
+df %>% relocate(f,.before = c)
+df %>% relocate(c:f,.after = a)
+```
+:::
+
+::: {.column width="50%"}
+![](img/relocate.png)
+:::
+:::
+
+## Résumé de données
+
+> Pour obtenir des résumés de données, on utilisera la combinaison `group_by() + summarise()`.
+> C'est le duo infernal du tidyverse.
+
+Les données de `gapminder` contient beaucoup de pays (`country`) et variables dont l'espérance de vie (`LifeExp`).
+On peut être interresser par le calcul de la moyenne, de l'écart type ainsi que l'intervalle interquartile de l'espérance de vie par pays.
+Nous reviendrons sur `les statistiques` .
+
+Le code suivant le fait
+
+```{r}
+library(gapminder)
+library(tidyverse)
+gapminder %>% 
+  group_by(country) %>% 
+  summarise(
+    esp_mean = mean(lifeExp, na.rm = TRUE),
+    esp_sd = sd(lifeExp,na.rm = TRUE),
+    esp_iqr = IQR(lifeExp, na.rm = TRUE)
+  )
+```
+
+### Puissant n'est-ce pas?
+
+## Exemple de workflow
+
+<br>
+
+Que fait ce code ?
+
+```{r}
+library(gapminder)
+library(tidyverse)
+gapminder %>% 
+  select(continent:gdpPercap) %>% 
+  filter(between(year, 1950,1990)) %>% 
+  group_by(continent) %>% 
+  summarise(
+    exp_mean = mean(lifeExp, na.rm = TRUE),
+    pop_mean = mean(pop, na.rm = TRUE),
+    gdp_mean = mean(gdpPercap, na.rm =TRUE)
+    )
+```
+
+Voyez vous à quel point R est puissant ?
+Le pipe facilite la lecture, rend le code élégant.
+
+La grande touche?
+Le tidyverse fait parler le code.
+Voilà pourquoi il faut bien l'apprendre.
+
+## Rendre tidy les données
+
+> Un jeu de données est dit tidy si il respecte les conditions de noms édictées plus haut, si une colonne représente une variable, une ligne un observation.
+
+Pour des raisons pratiques ou de méconnaissance, la plupart des données issues de la vies réelles ne sont pas tidy.
+Cela surcharge d'avantage l'analyste car les données doivent être nettoyées, reformater au besoin.
+Nous verrons comment pivoter un jeux de données.
+
+::: columns
+::: {.column width="50%"}
+**Tableau long à compact**
+
+<br>
+
+```{r}
+library(gapminder)
+wider <- gapminder %>% 
+  select(year,country,lifeExp) %>% 
+  pivot_wider(
+    id_cols = country,
+    names_from = "year",
+    names_prefix = "year_",
+    values_from = lifeExp
+    )
+```
+:::
+
+::: {.column width="50%"}
+**Tableau Compact à Long**
+
+<br>
+
+```{r}
+library(gapminder)
+longer <- pivot_longer(
+  wider,
+  cols = -country,
+  names_to = "year",
+  values_to = "life",
+  names_prefix = "year_")
+```
+:::
+:::
+
+## Statistique descriptive
+
+> La statistique descriptive permet de résumer au mieux les données en calculant des paramètres bien précis.
+> Elle permet également d'inspecter, de jeter un coup d'oeil rapide sur un jeu de données.
+
+Les paramètres clés à calculer sont les suivants :
+
+::: columns
+::: {.column width="50%"}
+**Paramètres de tendance centrale**
+
+-   Moyenne, médiane
+
+-   Minimum, maximum
+
+-   Quartiles (plus généralement quantiles)
+:::
+
+::: {.column width="50%"}
+**Paramètre de formes, de dispersion**
+
+-   étendue, intervalle interquartile
+
+-   écart type, variance, coefficient de variation
+
+-   coeficient d'assymétrie, d'aplatissement
+:::
+:::
+
+<br>
+
+```{r}
+avg <- mean(x); med <- median(x) ; sd <- sd(x)
+q2 <- quantile(x, prob = .25); min <- min(x)
+max <- max(x);range <- rang(x); iqr <- IQR(x)
+```
+
+## Statistique descriptive
+
+La puissance de `dlookr`
+
+<br>
+
+::: columns
+::: {.column width="50%"}
+```{r}
+# beaucoup de percentile
+gapminder %>% 
+  select(where(is.numeric),-year) %>% 
+  describe()
+# choix
+gapminder %>% 
+  select(where(is.numeric),-year) %>% 
+  describe(quantiles =c(.25,.50,.75))
+```
+:::
+
+::: {.column width="50%"}
+![](img/Screenshot%202022-10-22%20at%2012.16.14.png)
+:::
+:::
+
+Savoir plus sur les possibilités de `dlookr` : [introduce dlookr](https://choonghyunryu.github.io/dlookr/articles/introduce.html)
+
+La chaîne youtube du magnifique Yuri : [R package reviews {dlookr} diagnose, explore and transform your data](https://youtu.be/M7eNYbd4n1Y)
+
+## Exporter des résultats
+
+<br>
+
+Les analyses effectuées sous R peuvent être exporter, les options disponibles sont très variées mais le plus souvent on a besoin des sorties dans des fichiers textes plats ou Excel.
+
+::: columns
+::: {.column width="50%"}
+**Fichier csv**
+
+<br>
+
+```{r}
+# choix
+gapminder %>% 
+  select(where(is.numeric),-year) %>%
+  describe(quantiles =c(.25,.50,.75)) %>%
+  vroom_write(
+    file = "ouput/stats.csv",
+    col_names = TRUE,
+    na = "NA",
+    delim = ","
+    )
+```
+:::
+
+::: {.column width="50%"}
+**Fichier Excel**
+
+<br>
+
+```{r}
+library(writexl)
+# choix
+gapminder %>% 
+  select(where(is.numeric),-year) %>%
+  describe(quantiles =c(.25,.50,.75)) %>%
+  write_xlsx(
+    path = "ouput/stats.xlsx",
+    col_names = TRUE,
+    format_headers = TRUE
+    )
+```
+:::
+:::
+
+## Visualisation de données
+
+> " Une image vaut mille mots"
+
+La visualisation est capitale en analyse de données.
+Elle permet de ressortir assez de caractéristiques des données et de représenter de façon visuelle les résultats.
+La librairie nouvelle génération de graphique est ggplot2.
+
+-   Une syntaxe simple et intuitive :
+
+```{r}
+ggplot(
+  data = <DATA>,
+  mapping = aes(x = <XVAR>, y = <YVAR>))+
+  geom_<TYPE>()
+<TYPE> : boxplot, line, point, histogram, density,...
+
+```
+
+-   Une grande possibilité de personnalisation (thèmes variées, possibilité de DIY
+
+-   De beaux rendus
+
+## Visualisation de données
+
+### Nuages de points
+
+> Le nuage de points est particulièrement utile lorsque les valeurs des variables sur l'axe des y dépendent des valeurs de la variable de l'axe des x.
+> Dans un nuage de points, les points sont placés sans être reliés
+
+<br>
+
+::: columns
+::: {.column width="50%"}
+```{r}
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x =bill_length_mm,
+    y = bill_depth_mm
+    )
+  ) + geom_point()+
+  labs(
+   title = "Bill length vs Bill depth",
+   caption = "Data Science avec R",
+   x = "Bill Length (mm)",
+   y  = "Bill Depth (mm)"
+  )+ theme_gray(base_size = 20)
+       
+
+```
+:::
+
+::: {.column width="50%"}
+![](images/paste-E7C824DD.png)
+:::
+:::
+
+## Visualisation de données
+
+### Nuages de points
+
+<br>
+
+::: columns
+::: {.column width="50%"}
+```{r}
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x =bill_length_mm,
+    y = bill_depth_mm,
+    color = species
+    )
+  ) + geom_point()+
+  labs(
+   title = "Bill length vs Bill depth",
+   caption = "Data Science avec R",
+   x = "Bill Length (mm)",
+   y  = "Bill Depth (mm)"
+  )+ theme_gray(base_size = 20)
+       
+
+```
+:::
+
+::: {.column width="50%"}
+![](images/paste-5DE627A0.png)
+:::
+:::
