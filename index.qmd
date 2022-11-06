@@ -20,9 +20,9 @@ execute:
   echo: true
 ---
 
-<h1>Techniques d'analyse de données</h1>
+<h1>Introduction à l'analyse de données</h1>
 
-<h2>Une introduction rapide à R et au Tidyverse</h2>
+<h2>avec R et le Tidyverse</h2>
 
 <hr>
 
@@ -30,32 +30,27 @@ execute:
 
 ![](img/tidyverse2.png){fig-align="right"}
 
-## Objectifs pédagogiques
+## Objectifs du module
 
 <br>
 
-Ce module est une introduction \[**très rapide**\]{style="color:#cc0000"}à R et au Tidyverse conçu pour répondre aux objectifs suivants:
+Ce module est une introduction **très rapide à l'analyse de données avec R et le Tidyverse.** Il est conçu pour répondre aux objectifs suivants:
 
 -   comprendre ce qu'est R et le tidyverse;
 
--   créer et gérer un projet d'analyse de données;
+-   créer, conduire et gérer un projet d'analyse de données;
 
 -   importer des données Excel & textes plats;
 
--   manipuler, traiter un ensemble de données
+-   manipuler, traiter, analyser, et visualiser un ensemble de données
 
--   générer des résumés statistiques sur un ensemble de données
+-   exporter les résultats d'analyse sous forme de tableaux, graphiques, fichiers excels, textes etc...
 
--   visualisation statistique importantes.
+## Bibliographie
 
--   export des analyses en tableaux, graphiques etc...
-
-## Bibliographies
-
-> Ce module n'est qu'une introduction rapide, la plupart de ce contenu est tiré de ses livres que voici.
-> Ils sont disponibles en ligne gratuitement.
-> Grand merci à ces auteurs.
-> Mon coup de coeur c'est R for Data Science que je considère comme la bible
+> Ce module est juste une introduction rapide, la plupart du présent contenu est tiré de riches livres dont les liens sont mentionnées sur ce transparent.
+> Ils sont disponibles en ligne gratuitement, la contrepartie est de les citer comme référence dans les travaux.
+> Mon coup de cœur c'est [**R for Data Science**]{.underline} que je considère comme la bible du Data Scientist
 
 ::: columns
 ::: {.column width="50%"}
@@ -65,7 +60,8 @@ Ce module est une introduction \[**très rapide**\]{style="color:#cc0000"}à R e
 
 -   [R Graphics Cookbook](https://r-graphics.org "R Graphics Cookbook")
 
-Pour vous motiver davantage tous ces livre ont été écrit et publier en ligne avec R
+Pour vous motivez davantage tous ces livres ont été écrit et publié en ligne avec R et Quarto ou Rmarkdown.
+Oui R permet de faire ça.
 :::
 
 ::: {.column width="50%"}
@@ -89,21 +85,23 @@ Conçu à la base pour les Stats, de nos jours R est utilisé en :
 -   Traitement de texte : Documents technique et scientifique : livres, rapports, articles, posters
 
 R est forte de sa communauté qui la plupart du temps sont des chercheurs, étudiants.
-L'aide est disponible partout sur des blog, twitter suivre le hastag #rstats.
+L'aide est disponible partout sur des blogs.
+Sur Facebook ou Twitter suivre le hastag #rstats, #tidyverse.
 :::
 
 ::: {.column width="50%"}
-**Tidyverse** est une boîte à outils conçu pour faciliter, accelerer la partie traitement et analyse de données et se concentré sur les interprétations.
+**Tidyverse** est une boîte à outils conçu pour faciliter, accélérer la partie traitement et analyse de données et se concentré sur les interprétations.
+En gros tidyverse permet de gérer :
 
--   de l'importation des données
+-   l'importation des données (vroom, readr, foreign)
 
--   du recodage, nettoyage, traitement et inspection
+-   le (ré)codage, nettoyage, traitement et inspection
 
--   de l'analyse et la visualisation, production de rapports
+-   l'analyse et la visualisation, production de rapports
 
--   Partage des résultats d'analyses sous forme de page web (HTML), de pdf ou de site web
+-   le partage des résultats d'analyses sous forme de page web (HTML), de pdf ou de site web.
 
-Le Tidyverse pour moi c'est aujourd'hui une philosophie, une façon moderne et efficiente de travailler avec les données
+Le Tidyverse c'est aujourd'hui toute une philosophie, une façon moderne et efficiente de travailler avec les données.
 :::
 :::
 
@@ -111,64 +109,71 @@ Le Tidyverse pour moi c'est aujourd'hui une philosophie, une façon moderne et e
 
 <br>
 
-La programmation est très exigeante et requiert un certain nombre de règles simple mais qui allègent énormément le workflow.
+La programmation est très exigeante, et un certain nombre de règles simple peuvent aidés à être efficient.
 
--   Des noms de dossiers sans espaces, sans caractères spéciaux
+-   Les noms de dossiers sans espaces, sans caractères spéciaux
 
 -   Les noms doivent être courts, évocateurs et ne comporter ni caractères spéciaux, espaces
 
 -   Les chemins doivent être le plus cours possibles.
 
--   Les données d'entrées préférentiellement en textes, et bien structurées: une colonne une variable, une ligne une observation.
-    (Tidy data principles)
+-   Les données d'entrées préférentiellement en textes plats, et bien structurées: une colonne une variable, une ligne une observation.
+    (***tidy data principles***)
 
-Le plus important en programmation c'est de savoir :
+Le plus important de garder à l'esprit programmation c'est de savoir :
 
 -   plusieurs façon existent, et une plus simple est recherchée
 
--   être créatifs, curieux et aimer les défis
+-   être créatifs, curieux et aimer les défis.
 
--   un langage de programmation est un outil (avoir les outils du menuisier ne fait de vous un )
+-   un langage de programmation est un outil (avoir les outils du menuisier ne fait de vous un ! )
 
 ## Packages à installer
 
 <br>
 
-Les packages sont des collections de fonctions, de données développer et distribuer sur le CRAN ou sur un GIT.
-L'installation d'un package est relativement simple : Outils de gestion de packages ou via la commande `install.packages().`
+Les **packages** sont des collections de fonctions, de données développer et distribuer sur le **CRAN** ou sur un **GIT**.
+L'installation d'un package est relativement simple : **Tools \> Install Packages** ou `install.packages()`
 
-**Installation des packages**
+::: columns
+::: {.column width="50%"}
+![](images/paste-5526E89B.png)
+:::
 
-<br>
-
+::: {.column width="50%"}
 ```{r}
 install.packages(
   c("tidyverse","report","dlookr","devtools",
     "ggpubr","palmerpenguins","broom",
     "performance","see")
   )
-
 devtools::install_github("olihawkins/pilot")
-
 ```
+:::
+:::
 
-Le chargement est fait au moyen de la commande `library()`
+Le chargement est fait au moyen de la commande **`library()`** , par exemple **`library(tidyverse)`**
 
 ## Création de projet R
 
 <br>
 
 Un projet R est un environnement de travail propre et portable.
+Un projet R permet de :
 
--   Facilite la gestion de données et répertoire de travail
+-   Faciliter la gestion de données et répertoire de travail
 
--   Organise et fluidifie le processus d'analyse de données
+-   Organiser et fluidifie le processus d'analyse de données
 
--   Indépendant de l'ordinateur et du système d'exploitation
+-   S'affranchir d'un ordinateur et/ou d'un système d'exploitation particulier
 
-Création : **File \> New Project \>.... (Démonstration)**
+Création : **File \> New Project \>**
 
-<br>
+![](images/paste-6E97553E.png)
+
+## Création de projet
+
+Une fois le projet créé et chargé, on peut créer des dossiers et fichiers en exécutant à la console les commandes suivantes :
 
 ```{r}
 library(fs)
@@ -176,13 +181,13 @@ dir_create("data")
 dir_create("scripts")
 dir_create("figs")
 dir_create("output")
-file_create("data/00-configuration.R")
+file_create("scripts/00-configuration.R")
 ```
 
-Les fichiers et répertoires peuvent être créer manuellement aussi.
-
-Je vous ai fourni dejà un répertoire projet : `quick-intro-r`.
-Ouvrez le dans RStudio
+Les fichiers et répertoires peuvent être créés manuellement aussi.
+Les entrées et sorties de votre projet seront dans le dossier **`mon-projet`**\
+\
+Je vous ai fourni déjà un répertoire projet :**`quick-intro-r`**.Ouvrez-le dans RStudio
 
 **File \> Open project \>...(Démonstration)**
 
@@ -294,6 +299,7 @@ Plusieurs **package**, existent pour ça mais je montre deux points:
 
 ::: columns
 ::: {.column width="50%"}
+![](images/paste-8FC0BC4C.png)
 :::
 
 ::: {.column width="50%"}

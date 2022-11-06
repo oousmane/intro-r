@@ -405,30 +405,28 @@
 
 
 <section class="slide level2"><h1>
-Techniques d’analyse de données
+Introduction à l’analyse de données
 </h1>
 <h2>
-Une introduction rapide à R et au Tidyverse
+avec R et le Tidyverse
 </h2>
 <hr>
 <h3>
 Ousmane Ouedraogo, BSc <br>Météorologiste<br>2022-11-01
 </h3>
 
-<img data-src="img/tidyverse2.png" class="r-stretch quarto-figure-right"></section><section id="objectifs-pédagogiques" class="slide level2"><h2>Objectifs pédagogiques</h2>
+<img data-src="img/tidyverse2.png" class="r-stretch quarto-figure-right"></section><section id="objectifs-du-module" class="slide level2"><h2>Objectifs du module</h2>
 <p><br></p>
-<p>Ce module est une introduction [<strong>très rapide</strong>]{style=“color:#cc0000”}à R et au Tidyverse conçu pour répondre aux objectifs suivants:</p>
+<p>Ce module est une introduction <strong>très rapide à l’analyse de données avec R et le Tidyverse.</strong> Il est conçu pour répondre aux objectifs suivants:</p>
 <ul>
 <li><p>comprendre ce qu’est R et le tidyverse;</p></li>
-<li><p>créer et gérer un projet d’analyse de données;</p></li>
+<li><p>créer, conduire et gérer un projet d’analyse de données;</p></li>
 <li><p>importer des données Excel &amp; textes plats;</p></li>
-<li><p>manipuler, traiter un ensemble de données</p></li>
-<li><p>générer des résumés statistiques sur un ensemble de données</p></li>
-<li><p>visualisation statistique importantes.</p></li>
-<li><p>export des analyses en tableaux, graphiques etc…</p></li>
-</ul></section><section id="bibliographies" class="slide level2"><h2>Bibliographies</h2>
+<li><p>manipuler, traiter, analyser, et visualiser un ensemble de données</p></li>
+<li><p>exporter les résultats d’analyse sous forme de tableaux, graphiques, fichiers excels, textes etc…</p></li>
+</ul></section><section id="bibliographie" class="slide level2"><h2>Bibliographie</h2>
 <blockquote>
-<p>Ce module n’est qu’une introduction rapide, la plupart de ce contenu est tiré de ses livres que voici. Ils sont disponibles en ligne gratuitement. Grand merci à ces auteurs. Mon coup de coeur c’est R for Data Science que je considère comme la bible</p>
+<p>Ce module est juste une introduction rapide, la plupart du présent contenu est tiré de riches livres dont les liens sont mentionnées sur ce transparent. Ils sont disponibles en ligne gratuitement, la contrepartie est de les citer comme référence dans les travaux. Mon coup de cœur c’est <u><strong>R for Data Science</strong></u> que je considère comme la bible du Data Scientist</p>
 </blockquote>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -437,7 +435,7 @@ Ousmane Ouedraogo, BSc <br>Météorologiste<br>2022-11-01
 <li><p><a href="https://rstudio-education.github.io/hopr/" title="Hands-On Programming with R">Hands-On Programming with R</a></p></li>
 <li><p><a href="https://r-graphics.org" title="R Graphics Cookbook">R Graphics Cookbook</a></p></li>
 </ul>
-<p>Pour vous motiver davantage tous ces livre ont été écrit et publier en ligne avec R</p>
+<p>Pour vous motivez davantage tous ces livres ont été écrit et publié en ligne avec R et Quarto ou Rmarkdown. Oui R permet de faire ça.</p>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/Presentation1/Slide2.png"></p>
 </div>
@@ -452,67 +450,72 @@ Ousmane Ouedraogo, BSc <br>Météorologiste<br>2022-11-01
 <li><p>Développement web : Application web, API, Blog et Site web</p></li>
 <li><p>Traitement de texte : Documents technique et scientifique : livres, rapports, articles, posters</p></li>
 </ul>
-<p>R est forte de sa communauté qui la plupart du temps sont des chercheurs, étudiants. L’aide est disponible partout sur des blog, twitter suivre le hastag #rstats.</p>
+<p>R est forte de sa communauté qui la plupart du temps sont des chercheurs, étudiants. L’aide est disponible partout sur des blogs. Sur Facebook ou Twitter suivre le hastag #rstats, #tidyverse.</p>
 </div><div class="column" style="width:50%;">
-<p><strong>Tidyverse</strong> est une boîte à outils conçu pour faciliter, accelerer la partie traitement et analyse de données et se concentré sur les interprétations.</p>
+<p><strong>Tidyverse</strong> est une boîte à outils conçu pour faciliter, accélérer la partie traitement et analyse de données et se concentré sur les interprétations. En gros tidyverse permet de gérer :</p>
 <ul>
-<li><p>de l’importation des données</p></li>
-<li><p>du recodage, nettoyage, traitement et inspection</p></li>
-<li><p>de l’analyse et la visualisation, production de rapports</p></li>
-<li><p>Partage des résultats d’analyses sous forme de page web (HTML), de pdf ou de site web</p></li>
+<li><p>l’importation des données (vroom, readr, foreign)</p></li>
+<li><p>le (ré)codage, nettoyage, traitement et inspection</p></li>
+<li><p>l’analyse et la visualisation, production de rapports</p></li>
+<li><p>le partage des résultats d’analyses sous forme de page web (HTML), de pdf ou de site web.</p></li>
 </ul>
-<p>Le Tidyverse pour moi c’est aujourd’hui une philosophie, une façon moderne et efficiente de travailler avec les données</p>
+<p>Le Tidyverse c’est aujourd’hui toute une philosophie, une façon moderne et efficiente de travailler avec les données.</p>
 </div>
 </div>
 </section><section id="astuces-avant-de-commencer" class="slide level2"><h2>Astuces avant de commencer</h2>
 <p><br></p>
-<p>La programmation est très exigeante et requiert un certain nombre de règles simple mais qui allègent énormément le workflow.</p>
+<p>La programmation est très exigeante, et un certain nombre de règles simple peuvent aidés à être efficient.</p>
 <ul>
-<li><p>Des noms de dossiers sans espaces, sans caractères spéciaux</p></li>
+<li><p>Les noms de dossiers sans espaces, sans caractères spéciaux</p></li>
 <li><p>Les noms doivent être courts, évocateurs et ne comporter ni caractères spéciaux, espaces</p></li>
 <li><p>Les chemins doivent être le plus cours possibles.</p></li>
-<li><p>Les données d’entrées préférentiellement en textes, et bien structurées: une colonne une variable, une ligne une observation. (Tidy data principles)</p></li>
+<li><p>Les données d’entrées préférentiellement en textes plats, et bien structurées: une colonne une variable, une ligne une observation. (<strong><em>tidy data principles</em></strong>)</p></li>
 </ul>
-<p>Le plus important en programmation c’est de savoir :</p>
+<p>Le plus important de garder à l’esprit programmation c’est de savoir :</p>
 <ul>
 <li><p>plusieurs façon existent, et une plus simple est recherchée</p></li>
-<li><p>être créatifs, curieux et aimer les défis</p></li>
-<li><p>un langage de programmation est un outil (avoir les outils du menuisier ne fait de vous un )</p></li>
+<li><p>être créatifs, curieux et aimer les défis.</p></li>
+<li><p>un langage de programmation est un outil (avoir les outils du menuisier ne fait de vous un ! )</p></li>
 </ul></section><section id="packages-à-installer" class="slide level2"><h2>Packages à installer</h2>
 <p><br></p>
-<p>Les packages sont des collections de fonctions, de données développer et distribuer sur le CRAN ou sur un GIT. L’installation d’un package est relativement simple : Outils de gestion de packages ou via la commande <code>install.packages().</code></p>
-<p><strong>Installation des packages</strong></p>
-<p><br></p>
+<p>Les <strong>packages</strong> sont des collections de fonctions, de données développer et distribuer sur le <strong>CRAN</strong> ou sur un <strong>GIT</strong>. L’installation d’un package est relativement simple : <strong>Tools &gt; Install Packages</strong> ou <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="images/paste-5526E89B.png"></p>
+</div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(</span>
 <span id="cb1-2"><a href="#cb1-2"></a>  <span class="fu">c</span>(<span class="st">"tidyverse"</span>,<span class="st">"report"</span>,<span class="st">"dlookr"</span>,<span class="st">"devtools"</span>,</span>
 <span id="cb1-3"><a href="#cb1-3"></a>    <span class="st">"ggpubr"</span>,<span class="st">"palmerpenguins"</span>,<span class="st">"broom"</span>,</span>
 <span id="cb1-4"><a href="#cb1-4"></a>    <span class="st">"performance"</span>,<span class="st">"see"</span>)</span>
 <span id="cb1-5"><a href="#cb1-5"></a>  )</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"olihawkins/pilot"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"olihawkins/pilot"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Le chargement est fait au moyen de la commande <code><a href="https://rdrr.io/r/base/library.html">library()</a></code></p>
+</div>
+</div>
+<p>Le chargement est fait au moyen de la commande <strong><code><a href="https://rdrr.io/r/base/library.html">library()</a></code></strong> , par exemple <strong><code><a href="https://tidyverse.tidyverse.org">library(tidyverse)</a></code></strong></p>
 </section><section id="création-de-projet-r" class="slide level2"><h2>Création de projet R</h2>
 <p><br></p>
-<p>Un projet R est un environnement de travail propre et portable.</p>
+<p>Un projet R est un environnement de travail propre et portable. Un projet R permet de :</p>
 <ul>
-<li><p>Facilite la gestion de données et répertoire de travail</p></li>
-<li><p>Organise et fluidifie le processus d’analyse de données</p></li>
-<li><p>Indépendant de l’ordinateur et du système d’exploitation</p></li>
+<li><p>Faciliter la gestion de données et répertoire de travail</p></li>
+<li><p>Organiser et fluidifie le processus d’analyse de données</p></li>
+<li><p>S’affranchir d’un ordinateur et/ou d’un système d’exploitation particulier</p></li>
 </ul>
-<p>Création : <strong>File &gt; New Project &gt;…. (Démonstration)</strong></p>
-<p><br></p>
+<p>Création : <strong>File &gt; New Project &gt;</strong></p>
+
+<img data-src="images/paste-6E97553E.png" class="r-stretch"></section><section id="création-de-projet" class="slide level2"><h2>Création de projet</h2>
+<p>Une fois le projet créé et chargé, on peut créer des dossiers et fichiers en exécutant à la console les commandes suivantes :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(fs)</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">dir_create</span>(<span class="st">"data"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="fu">dir_create</span>(<span class="st">"scripts"</span>)</span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="fu">dir_create</span>(<span class="st">"figs"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5"></a><span class="fu">dir_create</span>(<span class="st">"output"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">file_create</span>(<span class="st">"data/00-configuration.R"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">file_create</span>(<span class="st">"scripts/00-configuration.R"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Les fichiers et répertoires peuvent être créer manuellement aussi.</p>
-<p>Je vous ai fourni dejà un répertoire projet : <code>quick-intro-r</code>. Ouvrez le dans RStudio</p>
+<p>Les fichiers et répertoires peuvent être créés manuellement aussi. Les entrées et sorties de votre projet&nbsp;seront&nbsp;dans le dossier <strong><code>mon-projet</code></strong><br><br>
+Je vous ai fourni déjà un répertoire projet :<strong><code>quick-intro-r</code></strong>.Ouvrez-le dans RStudio</p>
 <p><strong>File &gt; Open project &gt;…(Démonstration)</strong></p>
 </section><section id="premiers-pas-avec-r" class="slide level2"><h2>Premiers pas avec R</h2>
 <div class="columns">
@@ -587,7 +590,7 @@ Ousmane Ouedraogo, BSc <br>Météorologiste<br>2022-11-01
 <p>L’un des pans importants en analyse de données, c’est comment passer du fichier au logiciel. Cette procédure est appeler Importation de données, ou Input en anglais. Plusieurs <strong>package</strong>, existent pour ça mais je montre deux points:</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-
+<p><img data-src="images/paste-8FC0BC4C.png"></p>
 </div><div class="column" style="width:50%;">
 <p>Un véritable <strong>couteau suisse</strong> pour importer les fichiers textes, est le <strong>package vroom.</strong> Une seule commande :</p>
 <div class="cell">
